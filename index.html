@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FloraSOFT — внедрение AmoCRM и МойСклад с 2018 года</title>
+<meta name="description" content="FloraSOFT — интегратор AmoCRM и МойСклад. Внедряем и автоматизируем системы продаж и складского учёта с 2018 года: аудит, настройка, интеграции, обучение, сопровождение.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Piazzolla:ital,opsz,wght@0,8..30,400;0,8..30,500;0,8..30,600;1,8..30,400;1,8..30,500&family=Onest:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 28C16 16 22 6 30 4c0 12-6 22-14 24z' fill='%23a3e26f'/%3E%3Cpath d='M16 28C16 19 11 10 2 8c1 11 7 18 14 20z' fill='%234c8a3f'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#0b120e;
+  --bg-2:#0f1813;
+  --bg-3:#141f18;
+  --line:rgba(214,232,213,.12);
+  --line-strong:rgba(214,232,213,.22);
+  --ink:#e9f0e6;
+  --ink-dim:#a7b5a5;
+  --ink-faint:#71806f;
+  --leaf:#a3e26f;
+  --leaf-deep:#4c8a3f;
+  --cream:#f4efdf;
+  --serif:'Piazzolla',Georgia,serif;
+  --sans:'Onest',-apple-system,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+}
+::selection{background:var(--leaf);color:#0b120e}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+
+/* ---------- header ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  background:linear-gradient(rgba(11,18,14,.92),rgba(11,18,14,.75));
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--sans);font-weight:700;font-size:1.15rem;letter-spacing:.01em}
+.logo svg{width:26px;height:26px}
+.logo b{color:var(--leaf);font-weight:700}
+.nav-links{display:flex;gap:34px;align-items:center}
+.nav-links a{font-size:.92rem;color:var(--ink-dim);transition:color .25s}
+.nav-links a:hover{color:var(--leaf)}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:13px 26px;border-radius:100px;font-weight:600;font-size:.95rem;
+  transition:transform .25s,box-shadow .25s,background .25s;cursor:pointer;border:none;
+}
+.btn-leaf{background:var(--leaf);color:#0b120e}
+.btn-leaf:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(163,226,111,.28)}
+.btn-ghost{border:1px solid var(--line-strong);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--leaf);color:var(--leaf)}
+.nav .btn{padding:10px 20px;font-size:.88rem}
+.burger{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.burger span{display:block;width:22px;height:2px;background:var(--ink);margin:5px 0;transition:.3s}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding:170px 0 90px;overflow:hidden}
+.hero-glow{
+  position:absolute;top:-220px;right:-180px;width:720px;height:720px;border-radius:50%;
+  background:radial-gradient(circle,rgba(163,226,111,.14),transparent 62%);pointer-events:none;
+}
+.hero-branch{position:absolute;right:-40px;top:90px;width:460px;opacity:.16;pointer-events:none}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:12px;color:var(--leaf);
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;
+  margin-bottom:28px;
+}
+.eyebrow::before{content:'';width:34px;height:1px;background:var(--leaf)}
+h1{
+  font-family:var(--serif);font-weight:500;font-size:clamp(2.5rem,6vw,4.6rem);
+  line-height:1.06;letter-spacing:-.015em;max-width:15ch;
+}
+h1 em{font-style:italic;color:var(--leaf);font-weight:400}
+.hero-sub{max-width:56ch;color:var(--ink-dim);font-size:1.13rem;margin:30px 0 40px}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.hero-note{font-size:.85rem;color:var(--ink-faint);margin-top:18px}
+.partners{
+  display:flex;gap:14px;flex-wrap:wrap;margin-top:56px;
+}
+.partner-chip{
+  display:inline-flex;align-items:center;gap:9px;padding:9px 18px;border-radius:100px;
+  border:1px solid var(--line);font-size:.83rem;color:var(--ink-dim);background:rgba(20,31,24,.5);
+}
+.partner-chip i{width:8px;height:8px;border-radius:50%;background:var(--leaf);display:inline-block}
+
+/* staggered load */
+.rise{opacity:0;transform:translateY(26px);animation:rise .9s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.d1{animation-delay:.05s}.d2{animation-delay:.18s}.d3{animation-delay:.32s}.d4{animation-delay:.46s}.d5{animation-delay:.6s}
+
+/* ---------- marquee ---------- */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0;overflow:hidden;background:var(--bg-2)}
+.marquee-track{display:flex;gap:56px;width:max-content;animation:scroll 34s linear infinite;white-space:nowrap}
+.marquee-track span{font-family:var(--mono);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:56px}
+.marquee-track span::after{content:'✦';color:var(--leaf);font-size:.7rem}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ---------- metrics ---------- */
+.metrics{padding:96px 0 30px}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.metric{background:var(--bg);padding:42px 34px;transition:background .3s}
+.metric:hover{background:var(--bg-3)}
+.metric b{font-family:var(--serif);font-weight:500;font-size:clamp(2.4rem,4vw,3.4rem);color:var(--cream);display:block;line-height:1}
+.metric b i{font-style:normal;color:var(--leaf)}
+.metric span{display:block;margin-top:12px;color:var(--ink-dim);font-size:.9rem;max-width:22ch}
+
+/* ---------- sections ---------- */
+section{padding:110px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:64px;flex-wrap:wrap}
+.sec-num{font-family:var(--mono);color:var(--leaf);font-size:.78rem;letter-spacing:.16em;margin-bottom:16px;display:block}
+h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.9rem,3.8vw,3rem);line-height:1.12;letter-spacing:-.01em;max-width:20ch}
+h2 em{font-style:italic;color:var(--leaf);font-weight:400}
+.sec-head p{max-width:38ch;color:var(--ink-dim);font-size:1rem;padding-bottom:6px}
+
+/* services */
+.services{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.svc{
+  border:1px solid var(--line);border-radius:20px;padding:34px 30px;background:var(--bg);
+  transition:transform .3s,border-color .3s;position:relative;overflow:hidden;
+}
+.svc:hover{transform:translateY(-5px);border-color:rgba(163,226,111,.45)}
+.svc::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--leaf),transparent);opacity:0;transition:opacity .3s;
+}
+.svc:hover::after{opacity:1}
+.svc .ic{
+  width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+  background:rgba(163,226,111,.1);margin-bottom:24px;
+}
+.svc .ic svg{width:23px;height:23px;stroke:var(--leaf);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.svc h3{font-family:var(--sans);font-weight:600;font-size:1.14rem;margin-bottom:12px}
+.svc p{color:var(--ink-dim);font-size:.93rem}
+
+/* cases */
+.case{
+  display:grid;grid-template-columns:110px 1fr 340px;gap:44px;
+  padding:52px 0;border-top:1px solid var(--line);align-items:start;
+}
+.case:last-of-type{border-bottom:1px solid var(--line)}
+.case-num{font-family:var(--serif);font-style:italic;font-size:2.6rem;color:var(--ink-faint);line-height:1}
+.case-tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--leaf);display:block;margin-bottom:14px}
+.case h3{font-family:var(--serif);font-weight:500;font-size:1.65rem;line-height:1.25;margin-bottom:16px;max-width:24ch}
+.case p{color:var(--ink-dim);font-size:.95rem;max-width:58ch}
+.case-stats{display:flex;flex-direction:column;gap:18px}
+.case-stat{border-left:2px solid var(--leaf);padding-left:18px}
+.case-stat b{font-family:var(--serif);font-size:1.8rem;font-weight:500;color:var(--cream);display:block;line-height:1.1}
+.case-stat span{font-size:.82rem;color:var(--ink-faint)}
+.cases-more{margin-top:44px;color:var(--ink-faint);font-size:.9rem}
+.cases-more b{color:var(--ink)}
+
+/* process */
+.process{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;counter-reset:step}
+.step{padding:30px 26px 0 0;position:relative}
+.step::before{
+  counter-increment:step;content:'0' counter(step);
+  font-family:var(--mono);font-size:.75rem;color:var(--leaf);letter-spacing:.12em;
+}
+.step::after{
+  content:'';position:absolute;top:8px;left:0;right:20px;height:1px;background:var(--line-strong);
+}
+.step h3{font-weight:600;font-size:1.02rem;margin:18px 0 10px}
+.step p{color:var(--ink-dim);font-size:.86rem}
+.step em{display:block;font-style:normal;font-family:var(--mono);font-size:.7rem;color:var(--ink-faint);margin-top:14px;letter-spacing:.08em}
+
+/* quote */
+.quote{max-width:880px;margin:0 auto;text-align:center}
+.quote blockquote{
+  font-family:var(--serif);font-weight:400;font-style:italic;
+  font-size:clamp(1.4rem,2.8vw,2.1rem);line-height:1.4;color:var(--cream);
+}
+.quote blockquote::before{content:'« '}
+.quote blockquote::after{content:' »'}
+.quote figcaption{margin-top:28px;color:var(--ink-faint);font-size:.9rem}
+.quote figcaption b{color:var(--ink);font-weight:600;display:block;font-size:.95rem}
+
+/* CTA */
+.cta{padding:130px 0}
+.cta-card{
+  position:relative;border:1px solid rgba(163,226,111,.3);border-radius:28px;
+  padding:clamp(48px,7vw,90px);text-align:center;overflow:hidden;
+  background:radial-gradient(ellipse at 50% -30%,rgba(163,226,111,.16),var(--bg-2) 60%);
+}
+.cta-card h2{margin:0 auto 22px;max-width:22ch}
+.cta-card p{color:var(--ink-dim);max-width:46ch;margin:0 auto 40px}
+.cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.foot small{color:var(--ink-faint);font-size:.82rem}
+.foot-links{display:flex;gap:26px}
+.foot-links a{font-size:.85rem;color:var(--ink-dim);transition:color .25s}
+.foot-links a:hover{color:var(--leaf)}
+
+/* scroll reveal */
+.rev{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.rev.on{opacity:1;transform:none}
+
+/* ---------- mobile ---------- */
+@media(max-width:960px){
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .metrics-grid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr;gap:34px 26px}
+  .case{grid-template-columns:1fr;gap:26px}
+  .case-num{font-size:2rem}
+  .case-stats{flex-direction:row;flex-wrap:wrap;gap:26px}
+}
+@media(max-width:680px){
+  body{font-size:16px}
+  section{padding:80px 0}
+  .hero{padding:130px 0 70px}
+  .svc-grid{grid-template-columns:1fr}
+  .metrics-grid{grid-template-columns:1fr 1fr}
+  .metric{padding:28px 22px}
+  .steps{grid-template-columns:1fr}
+  .nav-links{
+    position:fixed;top:68px;right:0;left:0;background:var(--bg-2);
+    flex-direction:column;padding:30px 24px;gap:24px;border-bottom:1px solid var(--line);
+    transform:translateY(-130%);transition:transform .35s;align-items:flex-start;
+  }
+  .nav-links.open{transform:none}
+  .burger{display:block}
+  .hero-branch{width:280px;top:auto;bottom:-30px;opacity:.1}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 28C16 16 22 6 30 4c0 12-6 22-14 24z" fill="#a3e26f"/><path d="M16 28C16 19 11 10 2 8c1 11 7 18 14 20z" fill="#4c8a3f"/></svg>
+      Flora<b>SOFT</b>
+    </a>
+    <nav class="nav-links" id="menu">
+      <a href="#services">Услуги</a>
+      <a href="#cases">Кейсы</a>
+      <a href="#process">Процесс</a>
+      <a href="#contact">Контакты</a>
+      <a href="#contact" class="btn btn-leaf">Обсудить проект</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero" style="padding-top:170px">
+  <div class="hero-glow"></div>
+  <svg class="hero-branch" viewBox="0 0 400 500" fill="none" aria-hidden="true">
+    <path d="M200 500 C 190 380, 210 260, 200 100" stroke="#a3e26f" stroke-width="2"/>
+    <path d="M200 420 C 250 400, 290 360, 300 310" stroke="#a3e26f" stroke-width="1.6"/>
+    <path d="M200 340 C 150 320, 115 280, 108 230" stroke="#a3e26f" stroke-width="1.6"/>
+    <path d="M200 250 C 245 235, 275 200, 282 158" stroke="#a3e26f" stroke-width="1.4"/>
+    <ellipse cx="305" cy="295" rx="34" ry="14" transform="rotate(-38 305 295)" fill="#a3e26f"/>
+    <ellipse cx="103" cy="215" rx="34" ry="14" transform="rotate(32 103 215)" fill="#a3e26f"/>
+    <ellipse cx="287" cy="142" rx="30" ry="12" transform="rotate(-42 287 142)" fill="#a3e26f"/>
+    <ellipse cx="200" cy="86" rx="34" ry="15" transform="rotate(-90 200 86)" fill="#a3e26f"/>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow rise d1">Интегратор AmoCRM · МойСклад — с 2018 года</div>
+    <h1 class="rise d2">Выращиваем системы продаж, которые <em>работают без вас</em></h1>
+    <p class="hero-sub rise d3">FloraSOFT внедряет и автоматизирует AmoCRM и МойСклад под ключ: аудит процессов, настройка, интеграции с сайтом и телефонией, обучение команды и сопровождение после запуска.</p>
+    <div class="hero-cta rise d4">
+      <a href="#contact" class="btn btn-leaf">Обсудить проект</a>
+      <a href="#cases" class="btn btn-ghost">Смотреть кейсы</a>
+    </div>
+    <p class="hero-note rise d4">Бесплатный аудит вашей CRM — план внедрения за 2 дня.</p>
+    <div class="partners rise d5">
+      <span class="partner-chip"><i></i>Партнёр amoCRM</span>
+      <span class="partner-chip"><i></i>Партнёр МойСклад</span>
+      <span class="partner-chip"><i></i>214 внедрений с 2018 года</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>AmoCRM</span><span>МойСклад</span><span>Salesbot</span><span>Digital Pipeline</span><span>WhatsApp</span><span>Telegram</span><span>Телефония</span><span>1С</span><span>Сайт и виджеты</span><span>Маркетплейсы</span>
+    <span>AmoCRM</span><span>МойСклад</span><span>Salesbot</span><span>Digital Pipeline</span><span>WhatsApp</span><span>Telegram</span><span>Телефония</span><span>1С</span><span>Сайт и виджеты</span><span>Маркетплейсы</span>
+  </div>
+</div>
+
+<!-- METRICS -->
+<section class="metrics" style="padding-bottom:30px">
+  <div class="wrap">
+    <div class="metrics-grid rev">
+      <div class="metric"><b>8<i> лет</i></b><span>внедряем CRM и складской учёт — с 2018 года</span></div>
+      <div class="metric"><b>214</b><span>завершённых проектов внедрения и автоматизации</span></div>
+      <div class="metric"><b>37</b><span>отраслей: от розницы и опта до производства</span></div>
+      <div class="metric"><b>92<i>%</i></b><span>клиентов остаются с нами на сопровождении</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="sec-num">01 — Услуги</span>
+        <h2>Полный цикл: от аудита до <em>работающей системы</em></h2>
+      </div>
+      <p>Не «настроим и исчезнем», а построим процесс, которым ваша команда будет пользоваться каждый день.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc rev">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div>
+        <h3>Внедрение AmoCRM под ключ</h3>
+        <p>Воронки под ваши процессы, поля и права, автозадачи, отчёты для руководителя. Менеджеры работают в системе, а не в блокнотах.</p>
+      </div>
+      <div class="svc rev">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 7l8-4 8 4v10l-8 4-8-4z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></div>
+        <h3>Внедрение МойСклад</h3>
+        <p>Товарный учёт, остатки, закупки, производство и себестоимость в реальном времени. Инвентаризация перестаёт быть стихийным бедствием.</p>
+      </div>
+      <div class="svc rev">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M9 12h6M12 9v6"/><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="12" r="2.5"/></svg></div>
+        <h3>Интеграции</h3>
+        <p>Связываем CRM с сайтом, телефонией, WhatsApp и Telegram, 1С и маркетплейсами. Заявки из всех каналов — в одном окне.</p>
+      </div>
+      <div class="svc rev">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.5"/></svg></div>
+        <h3>Автоматизация воронки</h3>
+        <p>Salesbot, Digital Pipeline, триггеры и рассылки. Система сама двигает сделки, напоминает клиентам и греет спящую базу.</p>
+      </div>
+      <div class="svc rev">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+        <h3>Аудит и реанимация CRM</h3>
+        <p>Уже есть CRM, но ей не пользуются? Разберём, что сломано в процессах, вычистим базу и перезапустим так, чтобы прижилось.</p>
+      </div>
+      <div class="svc rev">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 4l9 5-9 5-9-5z"/><path d="M7 11.5V17c0 1.5 2.2 3 5 3s5-1.5 5-3v-5.5"/></svg></div>
+        <h3>Обучение и сопровождение</h3>
+        <p>Обучаем менеджеров и руководителей, пишем регламенты, отвечаем на вопросы после запуска. Система живёт, а не умирает через месяц.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section id="cases">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="sec-num">02 — Кейсы</span>
+        <h2>Цифры <em>до и после</em> внедрения</h2>
+      </div>
+      <p>Три истории из разных отраслей — как меняется бизнес, когда продажи и склад начинают работать в одной системе.</p>
+    </div>
+
+    <article class="case rev">
+      <div class="case-num">01</div>
+      <div>
+        <span class="case-tag">Розница · Сеть цветочных магазинов</span>
+        <h3>Две точки и доставка — в одной связке AmoCRM + МойСклад</h3>
+        <p>Заказы с сайта, из мессенджеров и по телефону падали в разные блокноты, остатки считали на глаз. Собрали все каналы в AmoCRM, подключили МойСклад с учётом списаний и себестоимости букетов, настроили автоматические цепочки повторных продаж к датам клиентов.</p>
+      </div>
+      <div class="case-stats">
+        <div class="case-stat"><b>+34%</b><span>повторных продаж за 6 месяцев</span></div>
+        <div class="case-stat"><b>12 → 4 мин</b><span>обработка заказа</span></div>
+      </div>
+    </article>
+
+    <article class="case rev">
+      <div class="case-num">02</div>
+      <div>
+        <span class="case-tag">Опт · Строительные материалы</span>
+        <h3>B2B-воронка с контролем счетов и дебиторки</h3>
+        <p>Менеджеры теряли заявки и забывали про выставленные счета. Построили этапную B2B-воронку, автозадачи на каждый счёт, напоминания по дебиторке и отчёт руководителя: кто, сколько и на каком этапе теряет.</p>
+      </div>
+      <div class="case-stats">
+        <div class="case-stat"><b>+27%</b><span>конверсия из заявки в оплату</span></div>
+        <div class="case-stat"><b>0</b><span>забытых счетов после запуска</span></div>
+      </div>
+    </article>
+
+    <article class="case rev">
+      <div class="case-num">03</div>
+      <div>
+        <span class="case-tag">Производство · Мебель на заказ</span>
+        <h3>Себестоимость каждого заказа — в реальном времени</h3>
+        <p>Производственный учёт вели в Excel, маржу узнавали в конце месяца. Внедрили МойСклад с техкартами и производственными операциями, связали с AmoCRM: сделка сразу показывает материалы, работу и прибыль.</p>
+      </div>
+      <div class="case-stats">
+        <div class="case-stat"><b>−2 часа</b><span>ручной работы каждый день</span></div>
+        <div class="case-stat"><b>100%</b><span>заказов с прозрачной маржой</span></div>
+      </div>
+    </article>
+
+    <p class="cases-more rev">…и ещё <b>200+ проектов</b> в рознице, услугах, опте, доставке и производстве. Расскажем о похожем на ваш — напишите нам.</p>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="sec-num">03 — Процесс</span>
+        <h2>Как проходит <em>внедрение</em></h2>
+      </div>
+      <p>Понятные этапы, фиксированная смета и еженедельные отчёты — вы всегда знаете, что происходит.</p>
+    </div>
+    <div class="steps">
+      <div class="step rev"><h3>Аудит</h3><p>Разбираем процессы продаж и учёта, находим, где теряются деньги и заявки.</p><em>3–5 дней</em></div>
+      <div class="step rev"><h3>Проект</h3><p>Карта воронок, интеграций и учёта. Фиксируем смету и сроки.</p><em>2–3 дня</em></div>
+      <div class="step rev"><h3>Настройка</h3><p>Настраиваем AmoCRM и МойСклад, подключаем телефонию, сайт, мессенджеры.</p><em>2–4 недели</em></div>
+      <div class="step rev"><h3>Обучение</h3><p>Обучаем команду на реальных сделках, пишем регламенты и шпаргалки.</p><em>1 неделя</em></div>
+      <div class="step rev"><h3>Сопровождение</h3><p>Поддержка, доработки и развитие системы вместе с ростом бизнеса.</p><em>постоянно</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section>
+  <div class="wrap">
+    <figure class="quote rev">
+      <blockquote>Раньше я узнавал о проблемах с продажами в конце месяца. Теперь вижу каждую сделку и остатки склада с телефона — и команда наконец работает в одной системе, а не в переписках.</blockquote>
+      <figcaption><b>Владелец розничной сети, Самара</b>клиент FloraSOFT с 2021 года</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contact" style="padding-top:20px">
+  <div class="wrap">
+    <div class="cta-card rev">
+      <span class="sec-num">04 — Контакты</span>
+      <h2>Расскажите о своей задаче — вернёмся с <em>планом внедрения</em> за 2 дня</h2>
+      <p>Бесплатно проведём аудит текущих процессов и покажем, где CRM и складской учёт принесут деньги именно вашему бизнесу.</p>
+      <div class="cta-actions">
+        <a class="btn btn-leaf" href="https://t.me/florasoft" target="_blank" rel="noopener">Написать в Telegram</a>
+        <a class="btn btn-ghost" href="mailto:hello@florasoft.ru">hello@florasoft.ru</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 28C16 16 22 6 30 4c0 12-6 22-14 24z" fill="#a3e26f"/><path d="M16 28C16 19 11 10 2 8c1 11 7 18 14 20z" fill="#4c8a3f"/></svg>
+      Flora<b>SOFT</b>
+    </a>
+    <div class="foot-links">
+      <a href="#services">Услуги</a>
+      <a href="#cases">Кейсы</a>
+      <a href="#process">Процесс</a>
+    </div>
+    <small>© FloraSOFT, 2018–2026 · Внедрение AmoCRM и МойСклад</small>
+  </div>
+</footer>
+
+<script>
+// scroll-reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rev').forEach(el=>io.observe(el));
+// мобильное меню
+const burger=document.getElementById('burger'),menu=document.getElementById('menu');
+burger.addEventListener('click',()=>menu.classList.toggle('open'));
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>menu.classList.remove('open')));
+</script>
+</body>
+</html>
