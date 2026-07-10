@@ -206,24 +206,30 @@ h2 em{font-style:italic;color:var(--leaf);font-weight:400}
 /* partner */
 .partner{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .partner-card{
-  display:grid;grid-template-columns:280px 1fr;gap:48px;align-items:center;
   border:1px solid rgba(163,226,111,.3);border-radius:24px;
-  padding:clamp(32px,4vw,52px);
-  background:radial-gradient(ellipse at 15% 0%,rgba(163,226,111,.14),var(--bg) 62%);
+  padding:clamp(36px,5vw,64px);text-align:center;
+  background:radial-gradient(ellipse at 50% -20%,rgba(163,226,111,.14),var(--bg) 62%);
 }
-.partner-badge{text-align:center}
+.partner-card>.sec-num{margin-bottom:14px}
+.partner-card h2{font-size:clamp(1.7rem,3.2vw,2.5rem);margin:0 auto 18px;max-width:22ch}
+.partner-lead{color:var(--ink-dim);font-size:1.05rem;margin:0 auto 44px;max-width:60ch}
+.partner-lead b{color:var(--ink)}
+.partner-seals{display:flex;gap:24px;justify-content:center;flex-wrap:wrap}
+.partner-badge{
+  flex:1 1 300px;max-width:360px;
+  border:1px solid var(--line);border-radius:18px;padding:30px 26px;
+  background:rgba(20,31,24,.5);text-align:center;transition:border-color .3s;
+}
+.partner-badge:hover{border-color:rgba(163,226,111,.45)}
 .partner-seal{
-  width:104px;height:104px;margin:0 auto 20px;border-radius:26px;
+  width:80px;height:80px;margin:0 auto 18px;border-radius:22px;
   display:flex;align-items:center;justify-content:center;
   background:rgba(163,226,111,.12);border:1px solid rgba(163,226,111,.35);
 }
-.partner-seal svg{width:52px;height:52px;stroke:var(--leaf);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.partner-badge b{display:block;font-family:var(--serif);font-weight:500;font-size:1.5rem;color:var(--cream);line-height:1.15}
-.partner-badge span{display:block;margin-top:8px;font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;color:var(--ink-faint);text-transform:uppercase}
-.partner-body h2{font-size:clamp(1.6rem,3vw,2.3rem);margin-bottom:16px}
-.partner-body p{color:var(--ink-dim);font-size:1rem;margin-bottom:14px;max-width:56ch}
-.partner-body p:last-of-type{margin-bottom:26px}
-.partner-body b{color:var(--ink)}
+.partner-seal svg{width:40px;height:40px;stroke:var(--leaf);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.partner-badge b{display:block;font-family:var(--serif);font-weight:500;font-size:1.3rem;color:var(--cream);line-height:1.2}
+.partner-badge em{display:block;font-style:normal;color:var(--ink-dim);font-size:.9rem;margin-top:8px}
+.partner-badge span{display:block;margin-top:14px;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--ink-faint);text-transform:uppercase}
 
 /* footer */
 footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
@@ -245,8 +251,6 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
   .case{grid-template-columns:1fr;gap:26px}
   .case-num{font-size:2rem}
   .case-stats{flex-direction:row;flex-wrap:wrap;gap:26px}
-  .partner-card{grid-template-columns:1fr;gap:30px;text-align:center}
-  .partner-body p{margin-left:auto;margin-right:auto}
 }
 @media(max-width:680px){
   body{font-size:16px}
@@ -387,19 +391,26 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
 <section class="partner" id="partner">
   <div class="wrap">
     <div class="partner-card rev">
-      <div class="partner-badge">
-        <div class="partner-seal">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/><path d="M9 12.5l2 2 4-4.2"/></svg>
+      <span class="sec-num">Партнёрство</span>
+      <h2>Официальный партнёр <em>amoCRM</em> и <em>МойСклад</em></h2>
+      <p class="partner-lead">FloraSOFT — сертифицированный партнёр обеих систем. Внедряем <b>amoCRM</b> для управляемой воронки продаж и <b>МойСклад</b> для товарного учёта, склада и производства, а затем связываем их в единую систему: заявки, сделки и остатки в одном контуре.</p>
+      <div class="partner-seals">
+        <div class="partner-badge">
+          <div class="partner-seal">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/><path d="M9 12.5l2 2 4-4.2"/></svg>
+          </div>
+          <b>amoCRM</b>
+          <em>Официальный партнёр программы amoSTART</em>
+          <span>ID партнёра 28621634</span>
         </div>
-        <b>Официальный партнёр<br>МойСклад</b>
-        <span>ID партнёра 2026-4879</span>
-      </div>
-      <div class="partner-body">
-        <span class="sec-num">Партнёрство</span>
-        <h2>Внедряем <em>МойСклад</em> как сертифицированный партнёр</h2>
-        <p><b>МойСклад</b> — облачная система для торговли, склада и производства: товарный учёт и остатки, заказы и закупки, CRM, розница и онлайн-касса в одном сервисе. Подходит рознице, опту, интернет-магазинам и производству.</p>
-        <p>FloraSOFT — официальный партнёр МойСклад по внедрению. Настроим сервис под ваши процессы, перенесём данные, свяжем с сайтом, телефонией и AmoCRM, обучим команду и останемся на сопровождении.</p>
-        <a href="https://t.me/florasoft" target="_blank" rel="noopener" class="btn btn-leaf">Внедрить МойСклад</a>
+        <div class="partner-badge">
+          <div class="partner-seal">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7l8-4 8 4v10l-8 4-8-4z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg>
+          </div>
+          <b>МойСклад</b>
+          <em>Официальный партнёр по внедрению</em>
+          <span>ID партнёра 2026-4879</span>
+        </div>
       </div>
     </div>
   </div>
