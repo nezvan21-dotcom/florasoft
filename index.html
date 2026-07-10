@@ -203,6 +203,28 @@ h2 em{font-style:italic;color:var(--leaf);font-weight:400}
 .cta-card p{color:var(--ink-dim);max-width:46ch;margin:0 auto 40px}
 .cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
 
+/* partner */
+.partner{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.partner-card{
+  display:grid;grid-template-columns:280px 1fr;gap:48px;align-items:center;
+  border:1px solid rgba(163,226,111,.3);border-radius:24px;
+  padding:clamp(32px,4vw,52px);
+  background:radial-gradient(ellipse at 15% 0%,rgba(163,226,111,.14),var(--bg) 62%);
+}
+.partner-badge{text-align:center}
+.partner-seal{
+  width:104px;height:104px;margin:0 auto 20px;border-radius:26px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(163,226,111,.12);border:1px solid rgba(163,226,111,.35);
+}
+.partner-seal svg{width:52px;height:52px;stroke:var(--leaf);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.partner-badge b{display:block;font-family:var(--serif);font-weight:500;font-size:1.5rem;color:var(--cream);line-height:1.15}
+.partner-badge span{display:block;margin-top:8px;font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;color:var(--ink-faint);text-transform:uppercase}
+.partner-body h2{font-size:clamp(1.6rem,3vw,2.3rem);margin-bottom:16px}
+.partner-body p{color:var(--ink-dim);font-size:1rem;margin-bottom:14px;max-width:56ch}
+.partner-body p:last-of-type{margin-bottom:26px}
+.partner-body b{color:var(--ink)}
+
 /* footer */
 footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
 .foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
@@ -223,6 +245,8 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
   .case{grid-template-columns:1fr;gap:26px}
   .case-num{font-size:2rem}
   .case-stats{flex-direction:row;flex-wrap:wrap;gap:26px}
+  .partner-card{grid-template-columns:1fr;gap:30px;text-align:center}
+  .partner-body p{margin-left:auto;margin-right:auto}
 }
 @media(max-width:680px){
   body{font-size:16px}
@@ -354,6 +378,28 @@ footer{border-top:1px solid var(--line);padding:44px 0;background:var(--bg-2)}
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 4l9 5-9 5-9-5z"/><path d="M7 11.5V17c0 1.5 2.2 3 5 3s5-1.5 5-3v-5.5"/></svg></div>
         <h3>Обучение и сопровождение</h3>
         <p>Обучаем менеджеров и руководителей, пишем регламенты, отвечаем на вопросы после запуска. Система живёт, а не умирает через месяц.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNER -->
+<section class="partner" id="partner">
+  <div class="wrap">
+    <div class="partner-card rev">
+      <div class="partner-badge">
+        <div class="partner-seal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/><path d="M9 12.5l2 2 4-4.2"/></svg>
+        </div>
+        <b>Официальный партнёр<br>МойСклад</b>
+        <span>ID партнёра 2026-4879</span>
+      </div>
+      <div class="partner-body">
+        <span class="sec-num">Партнёрство</span>
+        <h2>Внедряем <em>МойСклад</em> как сертифицированный партнёр</h2>
+        <p><b>МойСклад</b> — облачная система для торговли, склада и производства: товарный учёт и остатки, заказы и закупки, CRM, розница и онлайн-касса в одном сервисе. Подходит рознице, опту, интернет-магазинам и производству.</p>
+        <p>FloraSOFT — официальный партнёр МойСклад по внедрению. Настроим сервис под ваши процессы, перенесём данные, свяжем с сайтом, телефонией и AmoCRM, обучим команду и останемся на сопровождении.</p>
+        <a href="https://t.me/florasoft" target="_blank" rel="noopener" class="btn btn-leaf">Внедрить МойСклад</a>
       </div>
     </div>
   </div>
